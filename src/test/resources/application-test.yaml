@@ -1,0 +1,53 @@
+spring:
+  config:
+    active:
+      on-profile: test
+  datasource:
+    data:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: password
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 50MB
+      max-request-size: 50MB
+  application:
+    name: file-storage
+  banner:
+    location: classpath:banner/banner.txt
+  jpa:
+    properties:
+      hibernate:
+        default_schema:
+        globally_quoted_identifiers: false
+      javax:
+        persistence:
+          create-database-schemas: false
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    generate-dll: true
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+pagination:
+  filter:
+    array-separator: |
+    field-separator: ;
+    level-separator: \.
+    pattern: ([\.\w]+?)(::|!:|<<|>>|>:|<:)([\w\s\.\(\)\-А-яЁё<>|%]+?)${pagination.filter.field-separator}
+  sort:
+    field-separator: ;
+    pattern: ([\w\.]+?)(:)(\w+?)${pagination.sort.field-separator}
+
+file:
+  service-path: C:\\Users\\solyanin\\IdeaProjects\\my-testing-only-repositories(non-work)\\file-storage\\src\\test\\resources\\storedfiles\\
+  test-path: C:\\Users\\solyanin\\IdeaProjects\\my-testing-only-repositories(non-work)\\file-storage\\src\\test\\resources\\testfiles\\

@@ -1,0 +1,66 @@
+server:
+  port: 8080
+  forward-headers-strategy: framework
+  error:
+    include-message: always
+  servlet:
+    session:
+      timeout: 60m
+
+spring:
+  profiles:
+    active: default
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:postgres}
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: always
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 5
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 50MB
+      max-request-size: 50MB
+  application:
+    name: file-storage
+  banner:
+    location: classpath:banner/banner.txt
+
+  jpa:
+    properties:
+      hibernate:
+        default_schema: file-storage-01
+        globally_quoted_identifiers: true
+        globally_quoted_identifiers_skip_column_definitions: true
+      javax:
+        persistence:
+          create-database-schemas: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+    groups-order: asc
+
+pagination:
+  filter:
+    array-separator: |
+    field-separator: ;
+    level-separator: \.
+    pattern: ([\.\w]+?)(::|!:|<<|>>|>:|<:)([\w\s\.\(\)\-А-яЁё<>|%]+?)${pagination.filter.field-separator}
+  sort:
+    field-separator: ;
+    pattern: ([\w\.]+?)(:)(\w+?)${pagination.sort.field-separator}
+
+file:
+  service-path: C:\\Users\\solyanin\\IdeaProjects\\my-testing-only-repositories(non-work)\\file-storage\\src\\main\\resources\\teststorage\\
